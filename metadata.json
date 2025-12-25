@@ -1,0 +1,7 @@
+{
+  "name": "Bokkyphotos",
+  "description": "A comprehensive photography management platform for professional creators to manage shoots, galleries, and clients.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
