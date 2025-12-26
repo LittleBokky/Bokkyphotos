@@ -27,15 +27,32 @@ const GalleryDetail: React.FC<GalleryDetailProps> = ({ isAdmin, albumId, onBack,
     }
   }, [albumId]);
 
+  const downloadFile = async (url: string, filename: string) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      // Fallback to direct link if fetch fails
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.target = '_blank';
+      link.click();
+    }
+  };
+
   const handleDownload = (e: React.MouseEvent | React.TouchEvent, src: string) => {
     e.stopPropagation();
-    const link = document.createElement('a');
-    link.href = src;
-    link.target = '_blank';
-    link.download = `photo-${Date.now()}.jpg`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    downloadFile(src, `photo-${Date.now()}.jpg`);
   };
 
   const togglePhotoSelection = (e: React.MouseEvent, id: string) => {
@@ -67,19 +84,13 @@ const GalleryDetail: React.FC<GalleryDetailProps> = ({ isAdmin, albumId, onBack,
     }
   };
 
-  const handleDownloadSelected = () => {
-    selectedPhotos.forEach(id => {
+  const handleDownloadSelected = async () => {
+    for (const id of Array.from(selectedPhotos)) {
       const photo = photos.find(p => p.id === id);
       if (photo) {
-        const link = document.createElement('a');
-        link.href = photo.image_url;
-        link.target = '_blank';
-        link.download = `photo-${id}.jpg`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        await downloadFile(photo.image_url, `photo-${id}.jpg`);
       }
-    });
+    }
   };
 
   const nextImage = (e?: React.MouseEvent | React.TouchEvent) => {
