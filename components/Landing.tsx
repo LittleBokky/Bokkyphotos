@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 
 interface LandingProps {
   onExplore: () => void;
+  onAbout: () => void;
 }
 
-const Landing: React.FC<LandingProps> = ({ onExplore }) => {
+const Landing: React.FC<LandingProps> = ({ onExplore, onAbout }) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -65,9 +66,6 @@ const Landing: React.FC<LandingProps> = ({ onExplore }) => {
       {/* Central Content */}
       <div className="relative h-full flex flex-col items-center justify-center px-6 text-center">
         <div className="animate-fade-in-up flex flex-col items-center">
-          <span className="text-primary text-[10px] md:text-xs font-black uppercase tracking-[0.5em] mb-4 block animate-pulse">
-            Premium Photography Engine
-          </span>
           <h1 className="text-5xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter leading-none mb-6">
             Bienvenidos a <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-primary to-white bg-[length:200%_auto] animate-shimmer">
@@ -79,14 +77,24 @@ const Landing: React.FC<LandingProps> = ({ onExplore }) => {
             Descubre nuestro portafolio de alta gama y calidad cinematográfica.
           </p>
 
-          <button
-            onClick={onExplore}
-            className="group relative flex items-center justify-center gap-2.5 bg-white text-black px-8 py-4 md:px-10 md:py-5 rounded-xl font-black text-xs md:text-sm uppercase tracking-widest overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl shadow-white/5"
-          >
-            <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity" />
-            <span>Visitar Galería</span>
-            <span className="material-symbols-outlined text-lg md:text-xl transition-transform group-hover:translate-x-1">arrow_forward</span>
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button
+              onClick={onExplore}
+              className="group relative flex items-center justify-center gap-2.5 bg-white text-black px-8 py-4 md:px-10 md:py-5 rounded-xl font-black text-xs md:text-sm uppercase tracking-widest overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl shadow-white/5 w-full sm:w-auto"
+            >
+              <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity" />
+              <span>Visitar Galería</span>
+              <span className="material-symbols-outlined text-lg md:text-xl transition-transform group-hover:translate-x-1">arrow_forward</span>
+            </button>
+
+            <button
+              onClick={onAbout}
+              className="group relative flex items-center justify-center gap-2.5 bg-white/5 text-white border border-white/10 px-8 py-4 md:px-10 md:py-5 rounded-xl font-black text-xs md:text-sm uppercase tracking-widest backdrop-blur-md transition-all hover:bg-white/10 hover:scale-105 active:scale-95 w-full sm:w-auto"
+            >
+              <span>Sobre Mí</span>
+              <span className="material-symbols-outlined text-lg md:text-xl transition-transform group-hover:translate-x-1">person</span>
+            </button>
+          </div>
         </div>
       </div>
 

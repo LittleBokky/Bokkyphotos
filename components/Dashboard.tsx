@@ -16,9 +16,9 @@ const Dashboard: React.FC<DashboardProps> = ({ isAdmin, onNavigate, onOpenGaller
         {/* Bio / Hero Section - Split Layout for PC */}
         <div className="flex flex-col md:flex-row md:items-stretch min-h-[60vh] md:min-h-[80vh] bg-surface-dark md:rounded-b-[4rem] overflow-hidden">
           {/* Image Side */}
-          <div className="w-full md:w-1/2 relative aspect-[3/4] md:aspect-auto">
+          <div className="w-full md:w-1/2 relative aspect-square md:aspect-auto">
             <div
-              className="absolute inset-0 bg-cover bg-[center_20%] md:bg-center"
+              className="absolute inset-0 bg-cover bg-[center_5%] md:bg-center"
               style={{ backgroundImage: 'url("/profile.jpg")' }}
             />
             {/* Overlay for mobile to ensure text readability if it goes on top, but here we split */}

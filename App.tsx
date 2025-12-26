@@ -28,7 +28,10 @@ const App: React.FC = () => {
     let content;
     switch (view) {
       case 'LANDING':
-        content = <Landing onExplore={() => setView('ALBUMS')} />;
+        content = <Landing
+          onExplore={() => setView('ALBUMS')}
+          onAbout={() => setView('DASHBOARD')}
+        />;
         break;
       case 'ADMIN_LOGIN':
         content = (
