@@ -15,7 +15,7 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, onCancel }) => 
     e.preventDefault();
     // In a real app, this would be a secure API call. 
     // For this prototype, we use a default admin credential.
-    if (username === 'admin' && password === 'bokky2025') {
+    if (username === 'bokkyphotos@gmail.com' && password === 'RafabokkyphotosAdmin2002?!.,') {
       onLoginSuccess();
     } else {
       setError(true);
@@ -40,24 +40,24 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, onCancel }) => 
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Usuario</label>
-            <input 
-              type="text"
+            <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Email Administrador</label>
+            <input
+              type="email"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full h-14 bg-surface-dark border border-white/5 rounded-2xl px-6 text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-bold"
-              placeholder="Nombre de usuario"
+              className="w-full h-14 bg-surface-dark border border-white/5 rounded-2xl px-6 text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-bold placeholder:text-slate-700"
+              placeholder="admin@ejemplo.com"
               required
             />
           </div>
 
           <div className="space-y-2">
             <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Contraseña</label>
-            <input 
+            <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full h-14 bg-surface-dark border border-white/5 rounded-2xl px-6 text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-bold"
+              className="w-full h-14 bg-surface-dark border border-white/5 rounded-2xl px-6 text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none font-bold placeholder:text-slate-700"
               placeholder="••••••••"
               required
             />
@@ -70,13 +70,13 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, onCancel }) => 
           )}
 
           <div className="flex flex-col gap-4 pt-4">
-            <button 
+            <button
               type="submit"
               className="w-full h-14 bg-primary text-white font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
             >
               Iniciar Sesión
             </button>
-            <button 
+            <button
               type="button"
               onClick={onCancel}
               className="w-full h-14 bg-white/5 text-slate-400 font-black uppercase tracking-widest rounded-2xl border border-white/5 hover:bg-white/10 transition-all"

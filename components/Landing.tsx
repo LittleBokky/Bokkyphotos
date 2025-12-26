@@ -7,16 +7,39 @@ interface LandingProps {
 
 const Landing: React.FC<LandingProps> = ({ onExplore }) => {
   const [currentImage, setCurrentImage] = useState(0);
-  const images = [
-    "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=1600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1600&auto=format&fit=crop"
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Detectar si es desktop o móvil
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkIsDesktop();
+    window.addEventListener('resize', checkIsDesktop);
+
+    return () => window.removeEventListener('resize', checkIsDesktop);
+  }, []);
+
+  // Imágenes diferentes para desktop y móvil
+  const mobileImages = [
+    "/hero1.jpg",
+    "/hero2.jpg",
+    "/hero3.jpg"
   ];
+
+  const desktopImages = [
+    "/hero-desktop1.jpg",
+    "/hero-desktop2.jpg",
+    "/hero-desktop3.jpg"
+  ];
+
+  const images = isDesktop ? desktopImages : mobileImages;
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 5000); 
+    }, 5000);
     return () => clearInterval(timer);
   }, [images.length]);
 
@@ -26,10 +49,9 @@ const Landing: React.FC<LandingProps> = ({ onExplore }) => {
       {images.map((img, index) => (
         <div
           key={index}
-          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-[2000ms] ease-in-out ${
-            index === currentImage ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
-          }`}
-          style={{ 
+          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-[2000ms] ease-in-out ${index === currentImage ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
+            }`}
+          style={{
             backgroundImage: `url("${img}")`,
             transitionProperty: 'opacity, transform'
           }}
@@ -37,7 +59,7 @@ const Landing: React.FC<LandingProps> = ({ onExplore }) => {
       ))}
 
       {/* Overlays */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+      <div className="absolute inset-0 bg-black/40" />
       <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-black/20" />
 
       {/* Central Content */}
@@ -73,9 +95,8 @@ const Landing: React.FC<LandingProps> = ({ onExplore }) => {
         {images.map((_, index) => (
           <div
             key={index}
-            className={`h-1 rounded-full transition-all duration-500 ${
-              index === currentImage ? 'w-12 bg-primary' : 'w-3 bg-white/30'
-            }`}
+            className={`h-1 rounded-full transition-all duration-500 ${index === currentImage ? 'w-12 bg-primary' : 'w-3 bg-white/30'
+              }`}
           />
         ))}
       </div>

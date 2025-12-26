@@ -12,6 +12,7 @@ import { AppView } from './types';
 const App: React.FC = () => {
   const [view, setView] = useState<AppView>('LANDING');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [selectedAlbumId, setSelectedAlbumId] = useState<string | null>(null);
 
   const handleAdminLoginSuccess = () => {
     setIsAdmin(true);
@@ -24,43 +25,78 @@ const App: React.FC = () => {
   };
 
   const renderView = () => {
+    let content;
     switch (view) {
       case 'LANDING':
-        return <Landing onExplore={() => setView('ALBUMS')} />;
+        content = <Landing onExplore={() => setView('ALBUMS')} />;
+        break;
       case 'ADMIN_LOGIN':
-        return (
-          <AdminLogin 
-            onLoginSuccess={handleAdminLoginSuccess} 
-            onCancel={() => setView('ALBUMS')} 
+        content = (
+          <AdminLogin
+            onLoginSuccess={handleAdminLoginSuccess}
+            onCancel={() => setView('ALBUMS')}
           />
         );
+        break;
       case 'DASHBOARD':
-        return <Dashboard 
+        content = <Dashboard
           isAdmin={isAdmin}
-          onNavigate={(v) => setView(v)} 
-          onOpenGallery={() => setView('GALLERY_DETAIL')} 
+          onNavigate={(v) => {
+            if (v === 'ALBUMS') setSelectedAlbumId(null);
+            setView(v);
+          }}
+          onOpenGallery={() => {
+            setView('ALBUMS');
+          }}
         />;
+        break;
       case 'ALBUMS':
-        return <Organization 
+        content = <Organization
           isAdmin={isAdmin}
           onAdminLogout={handleAdminLogout}
           onAdminLoginRequest={() => setView('ADMIN_LOGIN')}
-          onBack={() => setView('DASHBOARD')} 
-          onOpenGallery={() => setView('GALLERY_DETAIL')} 
+          onBack={() => setView('DASHBOARD')}
+          onOpenGallery={(albumId) => {
+            setSelectedAlbumId(albumId);
+            setView('GALLERY_DETAIL');
+          }}
         />;
+        break;
       case 'UPLOADER':
-        return <Uploader onBack={() => setView('ALBUMS')} onDone={() => setView('ALBUMS')} />;
+        content = <Uploader albumId={selectedAlbumId} onBack={() => setView('ALBUMS')} onDone={() => setView('ALBUMS')} />;
+        break;
       case 'GALLERY_DETAIL':
-        return <GalleryDetail isAdmin={isAdmin} onBack={() => setView('ALBUMS')} />;
+        content = (
+          <GalleryDetail
+            isAdmin={isAdmin}
+            albumId={selectedAlbumId}
+            onBack={() => {
+              setSelectedAlbumId(null);
+              setView('ALBUMS');
+            }}
+            onAddPhotos={() => setView('UPLOADER')}
+          />
+        );
+        break;
       default:
-        return <Organization 
+        content = <Organization
           isAdmin={isAdmin}
           onAdminLogout={handleAdminLogout}
           onAdminLoginRequest={() => setView('ADMIN_LOGIN')}
-          onBack={() => setView('DASHBOARD')} 
-          onOpenGallery={() => setView('GALLERY_DETAIL')} 
+          onBack={() => setView('DASHBOARD')}
+          onOpenGallery={(albumId) => {
+            setSelectedAlbumId(albumId);
+            setView('GALLERY_DETAIL');
+          }}
         />;
+        break;
     }
+
+    return (
+      <div key={view} className="animate-page-fade-in min-h-screen">
+        {content}
+      </div>
+    );
   };
 
   const showBottomNav = view !== 'ADMIN_LOGIN' && view !== 'LANDING';
@@ -72,11 +108,11 @@ const App: React.FC = () => {
       </main>
       {showBottomNav && (
         <div className="pb-20">
-          <BottomNav 
+          <BottomNav
             isAdmin={isAdmin}
-            currentView={view} 
-            onNavigate={(v) => setView(v)} 
-            onFabClick={() => setView('UPLOADER')} 
+            currentView={view}
+            onNavigate={(v) => setView(v)}
+            onFabClick={() => setView('UPLOADER')}
           />
         </div>
       )}
