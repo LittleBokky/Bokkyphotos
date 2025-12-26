@@ -74,7 +74,7 @@ const Landing: React.FC<LandingProps> = ({ onExplore, onAbout }) => {
           </h1>
           <p className="text-slate-200 text-base md:text-xl font-medium max-w-md md:max-w-2xl mx-auto leading-relaxed mb-10 opacity-80">
             Capturando momentos, preservando historias. <br className="hidden md:block" />
-            Descubre nuestro portafolio de alta gama y calidad cinematográfica.
+            Aquí encontrarás mi galería de trabajos realizados y más información sobre mí.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
