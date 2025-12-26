@@ -110,14 +110,15 @@ const App: React.FC = () => {
         {renderView()}
       </main>
       {showBottomNav && (
-        <div className="pb-20">
+        <>
+          <div className="h-24 md:h-28" />
           <BottomNav
             isAdmin={isAdmin}
             currentView={view}
             onNavigate={(v) => setView(v)}
             onFabClick={() => setView('UPLOADER')}
           />
-        </div>
+        </>
       )}
     </div>
   );

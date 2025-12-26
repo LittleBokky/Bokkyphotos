@@ -11,8 +11,14 @@ interface BottomNavProps {
 
 const BottomNav: React.FC<BottomNavProps> = ({ isAdmin, currentView, onNavigate, onFabClick }) => {
   return (
-    <div className="fixed bottom-0 w-full flex justify-center z-50">
-      <div className="w-full max-w-xl bg-background-dark/80 backdrop-blur-2xl border-t md:border-x border-white/5 md:rounded-t-[2.5rem] pb-safe pt-2 px-10 shadow-2xl">
+    <div className="fixed bottom-0 left-0 right-0 flex justify-center z-50 pointer-events-none">
+      <div
+        className="pointer-events-auto w-full max-w-xl bg-background-dark/95 backdrop-blur-2xl border-t md:border-x border-white/5 md:rounded-t-[2.5rem] pt-3 px-10 shadow-2xl"
+        style={{
+          paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)',
+          transform: 'translateZ(0)'
+        }}
+      >
         <div className="flex justify-around items-center h-16 relative">
           <button
             onClick={() => onNavigate('LANDING')}
@@ -49,7 +55,6 @@ const BottomNav: React.FC<BottomNavProps> = ({ isAdmin, currentView, onNavigate,
             <span className="text-[9px] font-black uppercase tracking-[0.1em]">Sobre Mi</span>
           </button>
         </div>
-        <div className="h-1 md:h-2" />
       </div>
     </div>
   );
